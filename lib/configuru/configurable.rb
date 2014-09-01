@@ -3,7 +3,7 @@ module Configuru
     
     module ClassMethods
       extend Forwardable
-      def_delegators :configuration_class, :param, :param_names
+      def_delegator :configuration_class, :param, :def_config_param
       def configuration_class
         @configuration_class ||= Class.new do
           include Configuru::ConfigMethods 

@@ -5,33 +5,33 @@ describe Configuru::Configurable do
     module TestConfigurableModule
       include Configuru::Configurable
       provide_configuration
-      param :test1
+      def_config_param :test1
     end
     module TestConfigurableModuleBase
       include Configuru::Configurable
       provide_configuration :base
-      param :test1
+      def_config_param :test1
     end
     module TestConfigurableModuleInst
       include Configuru::Configurable
       provide_configuration :instances
-      param :test1
+      def_config_param :test1
     end
 
     class TestConfigurableClass
       include Configuru::Configurable
       provide_configuration
-      param :test1
+      def_config_param :test1
     end
     class TestConfigurableClassBase
       include Configuru::Configurable
       provide_configuration :base
-      param :test1
+      def_config_param :test1
     end
     class TestConfigurableClassInst
       include Configuru::Configurable
       provide_configuration :instances
-      param :test1
+      def_config_param :test1
     end
   end
   

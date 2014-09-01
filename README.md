@@ -30,9 +30,10 @@ class MyClass
   include Configuru::Configurable
   provide_configuration
   
-  param :secret_key, make_string: true, default: (ENV['SECRET_KEY_'] || '???')
-  param :color, default: :green, convert: ->(value) { raise "Unknown color" unless [:red,:green].include?(value); value }
-  param :percentage, make_float:true, min:0, max:100, default:100
+  def_config_param :secret_key, make_string: true, default: (ENV['SECRET_KEY_'] || '???')
+  def_config_param :color, default: :green, 
+                   convert: ->(val) { raise "Huh?" unless [:red,:green].include?(val); val }
+  def_config_param :percentage, make_float:true, min:0, max:100, default:100
   
   def initialize(options,&block)
     configure(options,&block)
