@@ -3,6 +3,9 @@
 Provides convenient interface for managing configuration parameters for modules, classes and instances.
 Requires Ruby version >= 2.1.
 
+[![Build Status](https://travis-ci.org/moonfly/configuru.svg?branch=master)](https://travis-ci.org/moonfly/configuru)
+[![Coverage Status](https://img.shields.io/coveralls/moonfly/configuru.svg)](https://coveralls.io/r/moonfly/configuru?branch=master)
+
 ## Installation
 
 Add this line to your application's Gemfile:
