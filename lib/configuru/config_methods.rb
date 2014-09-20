@@ -51,10 +51,10 @@ module Configuru
           value = value.to_f if options[:make_float]
           value = !!value if options[:make_bool]
           if options.has_key?(:max) && (value > options[:max])
-            raise ArgumentError.new("'#{name.to_s}' must no be more than #{options[:max]}")
+            raise ArgumentError.new("'#{name.to_s}' must be not more than #{options[:max]}")
           end
           if options.has_key?(:min) && (value < options[:min])
-            raise ArgumentError.new("'#{name.to_s}' must no be less than #{options[:min]}")
+            raise ArgumentError.new("'#{name.to_s}' must be not less than #{options[:min]}")
           end
           if options.has_key?(:in) && !options[:in].include?(value)
             raise ArgumentError.new("'#{name.to_s}' is out of range")
