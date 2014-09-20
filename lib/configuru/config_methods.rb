@@ -61,7 +61,7 @@ module Configuru
           end
           if options.has_key?(:convert)
             if options[:convert].is_a? Symbol
-              value = send options[:convert], value
+              value = @__parent_object.send options[:convert], value
             else
               value = options[:convert].call( value )
             end
@@ -80,6 +80,12 @@ module Configuru
     def is_locked
       @locked = false unless instance_variable_defined?(:@locked)
       @locked
+    end
+    def param_names
+      self.class.param_names
+    end
+    def set_parent_object(object)
+      @__parent_object = object
     end
     
     def configure(options={})

@@ -269,11 +269,14 @@ describe Configuru::ConfigMethods do
   end
   
   it 'allows specifying a custom conversion method' do
-    class << subject
+    class Parent
       def check_for_x(value)
         raise "X is not allowed" if value == "x"
         "ok"
       end
+    end
+    subject.set_parent_object(Parent.new)
+    class << subject
       param :test1, convert: :check_for_x
       param :test2, convert: ->(value) { value+1 }
     end
@@ -283,5 +286,29 @@ describe Configuru::ConfigMethods do
     
     expect{subject.test2=7}.not_to raise_error
     expect(subject.test2).to eq 8
+  end
+
+  it 'accesses the conversion method from the specified parent object, not itself' do
+    class Parent
+      def check_for_x2(value)
+        raise "X is not allowed" if value == "x"
+        "ok"
+      end
+    end
+    subject.set_parent_object(Parent.new)
+    class << subject
+      def check_for_x1(value)
+        raise "X is not allowed" if value == "x"
+        "ok"
+      end
+      param :test1, convert: :check_for_x1
+      param :test2, convert: :check_for_x2
+    end
+    expect{subject.test1=3}.to raise_error
+    expect{subject.test1="x"}.to raise_error
+
+    expect{subject.test2=3}.not_to raise_error
+    expect(subject.test2).to eq "ok"
+    expect{subject.test2="x"}.to raise_error
   end
 end

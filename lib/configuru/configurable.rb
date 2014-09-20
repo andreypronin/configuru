@@ -6,7 +6,10 @@ module Configuru
       def_delegator :configuration_class, :param, :def_config_param
       def configuration_class
         @configuration_class ||= Class.new do
-          include Configuru::ConfigMethods 
+          include Configuru::ConfigMethods
+          def initialize(parent)
+            set_parent_object parent 
+          end
         end
       end
       def provide_configuration(limit_to=false)
@@ -24,7 +27,7 @@ module Configuru
 
     module MainMethods
       def configuration
-        @configuruation ||= configuration_class.new
+        @configuruation ||= configuration_class.new(self)
       end
       def configure(options,&block)
         configuration.configure(options,&block)
