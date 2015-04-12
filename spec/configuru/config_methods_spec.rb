@@ -223,7 +223,7 @@ describe Configuru::ConfigMethods do
 
     expect { subject.test_h = nil }.not_to raise_error
     expect(subject.test_h).to be_a Hash
-    expect(subject.test_h).to eq Hash.new
+    expect(subject.test_h).to eq({})
 
     expect { subject.test_i = nil }.not_to raise_error
     expect(subject.test_i).to be_a Integer
