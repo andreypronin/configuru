@@ -17,9 +17,10 @@ module Configuru
           include MainMethods
           include InstanceMethods
         end
-        return unless [:instance, :instances].include?(limit_to)
-        # Add methods to base
-        extend MainMethods
+        unless [:instance, :instances].include?(limit_to)
+          # Add methods to base
+          extend MainMethods
+        end
       end
     end
 
