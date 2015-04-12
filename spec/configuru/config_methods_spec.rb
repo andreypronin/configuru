@@ -99,7 +99,7 @@ describe Configuru::ConfigMethods do
       param :test1
       param :test2
     end
-    [10,'test1=1;test2=2',nil].each do |value|
+    [10, 'test1=1;test2=2', nil].each do |value|
       expect { subject.options_source = value }.to raise_error
     end
   end
@@ -141,7 +141,7 @@ describe Configuru::ConfigMethods do
 
   it 'allows restriciting value classes' do
     class << subject
-      param :test, must_be: [Array,Hash]
+      param :test, must_be: [Array, Hash]
     end
     expect { subject.test = [] }.not_to raise_error
     expect { subject.test = {} }.not_to raise_error

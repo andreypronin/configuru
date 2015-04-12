@@ -12,12 +12,12 @@ module Configuru
         end
       end
       def provide_configuration(limit_to=false)
-        unless [:base,:class,:module].include?(limit_to)
+        unless [:base, :class, :module].include?(limit_to)
           # Add methods to instance
           include MainMethods
           include InstanceMethods
         end
-        unless [:instance,:instances].include?(limit_to)
+        unless [:instance, :instances].include?(limit_to)
           # Add methods to base
           extend MainMethods
         end
@@ -28,8 +28,8 @@ module Configuru
       def configuration
         @configuruation ||= configuration_class.new(self)
       end
-      def configure(options,&block)
-        configuration.configure(options,&block)
+      def configure(options, &block)
+        configuration.configure(options, &block)
       end
     end
 

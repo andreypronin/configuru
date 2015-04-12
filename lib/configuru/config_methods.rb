@@ -11,7 +11,7 @@ module Configuru
       def param_names
         @param_names ||= []
       end
-      def param(name,options={})
+      def param(name, options={})
         param_names << name.to_sym
 
         inst_var = "@#{name}"
@@ -89,7 +89,7 @@ module Configuru
     end
 
     def configure(options={})
-      Hash(options).each_pair do |name,value|
+      Hash(options).each_pair do |name, value|
         if name.to_sym == :options_source
           self.options_source = value
         else
@@ -106,7 +106,7 @@ module Configuru
           YAML.load(value)
         when String, Pathname
           output = {}
-          File.open(value,'r') { |f| output = YAML.load(f) }
+          File.open(value, 'r') { |f| output = YAML.load(f) }
           output
         else
           raise ArgumentError.new("Wrong argument class for options_source: #{value.class}")
