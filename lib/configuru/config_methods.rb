@@ -13,8 +13,8 @@ module Configuru
       end
       def param(name,options={})
         param_names << name.to_sym
-      
-        inst_var = "@#{name.to_s}"
+
+        inst_var = "@#{name}"
         define_method(name) do
           if !instance_variable_defined?(inst_var) && options.has_key?(:default)
             instance_variable_set inst_var, options[:default]
@@ -22,26 +22,26 @@ module Configuru
           instance_variable_get inst_var
         end
 
-        define_method("#{name.to_s}=") do |value|
+        define_method("#{name}=") do |value|
           if options[:lockable] && is_locked
-            raise ArgumentError.new("'#{name.to_s}' cannot be set at this time")
+            raise ArgumentError.new("'#{name}' cannot be set at this time")
           end
           if options[:not_nil] && value.nil?
-            raise ArgumentError.new("'#{name.to_s}' cannot be nil")
+            raise ArgumentError.new("'#{name}' cannot be nil")
           end
           if options[:not_empty] && (value.nil? || value.empty?)
-            raise ArgumentError.new("'#{name.to_s}' cannot be empty")
+            raise ArgumentError.new("'#{name}' cannot be empty")
           end
           if options.has_key?(:must_be) && !Array(options[:must_be]).include?(value.class)
             valid_class = false
             Array(options[:must_be]).each do |cname|
               valid_class = true if value.is_a?(cname)
             end
-            raise ArgumentError.new("Wrong class (#{value.class}) for '#{name.to_s}' value") unless valid_class
+            raise ArgumentError.new("Wrong class (#{value.class}) for '#{name}' value") unless valid_class
           end
           if options.has_key?(:must_respond_to)
             Array(options[:must_respond_to]).each do |mname|
-              raise ArgumentError.new("'#{name.to_s}' must respond to '#{mname}'") unless value.respond_to?(mname)
+              raise ArgumentError.new("'#{name}' must respond to '#{mname}'") unless value.respond_to?(mname)
             end
           end
           value = Hash(value) if options[:make_hash]
@@ -51,13 +51,13 @@ module Configuru
           value = value.to_f if options[:make_float]
           value = !!value if options[:make_bool]
           if options.has_key?(:max) && (value > options[:max])
-            raise ArgumentError.new("'#{name.to_s}' must be not more than #{options[:max]}")
+            raise ArgumentError.new("'#{name}' must be not more than #{options[:max]}")
           end
           if options.has_key?(:min) && (value < options[:min])
-            raise ArgumentError.new("'#{name.to_s}' must be not less than #{options[:min]}")
+            raise ArgumentError.new("'#{name}' must be not less than #{options[:min]}")
           end
           if options.has_key?(:in) && !options[:in].include?(value)
-            raise ArgumentError.new("'#{name.to_s}' is out of range")
+            raise ArgumentError.new("'#{name}' is out of range")
           end
           if options.has_key?(:convert)
             if options[:convert].is_a? Symbol
@@ -87,13 +87,13 @@ module Configuru
     def set_parent_object(object)
       @__parent_object = object
     end
-    
+
     def configure(options={})
       Hash(options).each_pair do |name,value|
         if name.to_sym == :options_source
           self.options_source = value
         else
-          send("#{name.to_s}=",value)
+          send("#{name}=", value)
         end
       end
       yield self if block_given?
@@ -102,7 +102,7 @@ module Configuru
     def options_source=(value)
       sub_options = case value
         when Hash, Array then value
-        when IO, StringIO, Tempfile then 
+        when IO, StringIO, Tempfile then
           YAML.load(value)
         when String, Pathname
           output = {}
@@ -117,7 +117,5 @@ module Configuru
         configure(sub_options)
       end
     end
-    
-
   end
 end
