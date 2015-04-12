@@ -17,7 +17,7 @@ module Configuru
 
         inst_var = "@#{name}"
         define_method(name) do
-          if !instance_variable_defined?(inst_var) && options.has_key?(:default)
+          if !instance_variable_defined?(inst_var) && options.key?(:default)
             instance_variable_set inst_var, options[:default]
           end
           instance_variable_get inst_var
@@ -33,14 +33,14 @@ module Configuru
           if options[:not_empty] && (value.nil? || value.empty?)
             fail ArgumentError.new("'#{name}' cannot be empty")
           end
-          if options.has_key?(:must_be) && !Array(options[:must_be]).include?(value.class)
+          if options.key?(:must_be) && !Array(options[:must_be]).include?(value.class)
             valid_class = false
             Array(options[:must_be]).each do |cname|
               valid_class = true if value.is_a?(cname)
             end
             fail ArgumentError.new("Wrong class (#{value.class}) for '#{name}' value") unless valid_class
           end
-          if options.has_key?(:must_respond_to)
+          if options.key?(:must_respond_to)
             Array(options[:must_respond_to]).each do |mname|
               fail ArgumentError.new("'#{name}' must respond to '#{mname}'") unless value.respond_to?(mname)
             end
@@ -51,16 +51,16 @@ module Configuru
           value = value.to_i if options[:make_int]
           value = value.to_f if options[:make_float]
           value = !!value if options[:make_bool]
-          if options.has_key?(:max) && (value > options[:max])
+          if options.key?(:max) && (value > options[:max])
             fail ArgumentError.new("'#{name}' must be not more than #{options[:max]}")
           end
-          if options.has_key?(:min) && (value < options[:min])
+          if options.key?(:min) && (value < options[:min])
             fail ArgumentError.new("'#{name}' must be not less than #{options[:min]}")
           end
-          if options.has_key?(:in) && !options[:in].include?(value)
+          if options.key?(:in) && !options[:in].include?(value)
             fail ArgumentError.new("'#{name}' is out of range")
           end
-          if options.has_key?(:convert)
+          if options.key?(:convert)
             if options[:convert].is_a? Symbol
               value = @__parent_object.send options[:convert], value
             else
