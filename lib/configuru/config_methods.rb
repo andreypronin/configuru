@@ -24,24 +24,24 @@ module Configuru
 
         define_method("#{name}=") do |value|
           if options[:lockable] && is_locked
-            raise ArgumentError.new("'#{name}' cannot be set at this time")
+            fail ArgumentError.new("'#{name}' cannot be set at this time")
           end
           if options[:not_nil] && value.nil?
-            raise ArgumentError.new("'#{name}' cannot be nil")
+            fail ArgumentError.new("'#{name}' cannot be nil")
           end
           if options[:not_empty] && (value.nil? || value.empty?)
-            raise ArgumentError.new("'#{name}' cannot be empty")
+            fail ArgumentError.new("'#{name}' cannot be empty")
           end
           if options.has_key?(:must_be) && !Array(options[:must_be]).include?(value.class)
             valid_class = false
             Array(options[:must_be]).each do |cname|
               valid_class = true if value.is_a?(cname)
             end
-            raise ArgumentError.new("Wrong class (#{value.class}) for '#{name}' value") unless valid_class
+            fail ArgumentError.new("Wrong class (#{value.class}) for '#{name}' value") unless valid_class
           end
           if options.has_key?(:must_respond_to)
             Array(options[:must_respond_to]).each do |mname|
-              raise ArgumentError.new("'#{name}' must respond to '#{mname}'") unless value.respond_to?(mname)
+              fail ArgumentError.new("'#{name}' must respond to '#{mname}'") unless value.respond_to?(mname)
             end
           end
           value = Hash(value) if options[:make_hash]
@@ -51,13 +51,13 @@ module Configuru
           value = value.to_f if options[:make_float]
           value = !!value if options[:make_bool]
           if options.has_key?(:max) && (value > options[:max])
-            raise ArgumentError.new("'#{name}' must be not more than #{options[:max]}")
+            fail ArgumentError.new("'#{name}' must be not more than #{options[:max]}")
           end
           if options.has_key?(:min) && (value < options[:min])
-            raise ArgumentError.new("'#{name}' must be not less than #{options[:min]}")
+            fail ArgumentError.new("'#{name}' must be not less than #{options[:min]}")
           end
           if options.has_key?(:in) && !options[:in].include?(value)
-            raise ArgumentError.new("'#{name}' is out of range")
+            fail ArgumentError.new("'#{name}' is out of range")
           end
           if options.has_key?(:convert)
             if options[:convert].is_a? Symbol
@@ -109,7 +109,7 @@ module Configuru
           File.open(value, 'r') { |f| output = YAML.load(f) }
           output
         else
-          raise ArgumentError.new("Wrong argument class for options_source: #{value.class}")
+          fail ArgumentError.new("Wrong argument class for options_source: #{value.class}")
       end
       if sub_options.is_a? Array
         sub_options.each { |elem| self.options_source = elem }

@@ -271,7 +271,7 @@ describe Configuru::ConfigMethods do
   it 'allows specifying a custom conversion method' do
     class Parent
       def check_for_x(value)
-        raise 'X is not allowed' if value == 'x'
+        fail 'X is not allowed' if value == 'x'
         'ok'
       end
     end
@@ -291,14 +291,14 @@ describe Configuru::ConfigMethods do
   it 'accesses the conversion method from the specified parent object, not itself' do
     class Parent
       def check_for_x2(value)
-        raise 'X is not allowed' if value == 'x'
+        fail 'X is not allowed' if value == 'x'
         'ok'
       end
     end
     subject.set_parent_object(Parent.new)
     class << subject
       def check_for_x1(value)
-        raise 'X is not allowed' if value == 'x'
+        fail 'X is not allowed' if value == 'x'
         'ok'
       end
       param :test1, convert: :check_for_x1
