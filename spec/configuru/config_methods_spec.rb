@@ -256,7 +256,7 @@ describe Configuru::ConfigMethods do
   it 'allows defining ranges for values' do
     class << subject
       param :test1, in: 3..7
-      param :test2, in: ['a','c']
+      param :test2, in: %w(a c)
     end
 
     expect{subject.test1=3}.not_to raise_error
