@@ -34,7 +34,7 @@ describe Configuru::Configurable do
       def_config_param :test1
     end
   end
-  
+
   it 'works for modules at base-level' do
     expect{TestConfigurableModuleBase.configure(test1: "1")}.not_to raise_error
     expect(TestConfigurableModuleBase.configuration.test1).to eq "1"
@@ -42,7 +42,7 @@ describe Configuru::Configurable do
   it 'does not work for modules at instance-level' do
     expect{TestConfigurableModuleInst.configure(test1: "1")}.to raise_error
   end
-  
+
   it 'works for classes at base-level' do
     expect{TestConfigurableClassBase.configure(test1: "1")}.not_to raise_error
     expect(TestConfigurableClassBase.configuration.test1).to eq "1"
@@ -50,7 +50,7 @@ describe Configuru::Configurable do
   it 'does not work for classes at instance-level' do
     expect{TestConfigurableClassInst.configure(test1: "1")}.to raise_error
   end
-  
+
   it 'works for class instances at instance-level' do
     subject = TestConfigurableClassInst.new
     expect{subject.configure(test1: "1")}.not_to raise_error
@@ -60,7 +60,7 @@ describe Configuru::Configurable do
     subject = TestConfigurableClassBase.new
     expect{subject.configure(test1: "1")}.to raise_error
   end
-  
+
   it 'provides a separate configuration for each instance and class' do
     subject1 = TestConfigurableClass.new
     subject2 = TestConfigurableClass.new
