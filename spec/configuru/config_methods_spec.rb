@@ -112,10 +112,10 @@ describe Configuru::ConfigMethods do
     begin
       f << opts_spec.to_yaml
       f.open
-      subject1 = TestIoSubjectClass.new.configure( options_source: f )
-      subject2 = TestIoSubjectClass.new.configure( options_source: f.path )
-      File.open( f.path ) do |real_f|
-        subject3 = TestIoSubjectClass.new.configure( options_source: real_f )
+      subject1 = TestIoSubjectClass.new.configure(options_source: f)
+      subject2 = TestIoSubjectClass.new.configure(options_source: f.path)
+      File.open(f.path) do |real_f|
+        subject3 = TestIoSubjectClass.new.configure(options_source: real_f)
       end
     ensure
       f.close

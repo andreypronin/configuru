@@ -63,7 +63,7 @@ module Configuru
             if options[:convert].is_a? Symbol
               value = @__parent_object.send options[:convert], value
             else
-              value = options[:convert].call( value )
+              value = options[:convert].call(value)
             end
           end
 
