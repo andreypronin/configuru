@@ -112,7 +112,7 @@ module Configuru
           raise ArgumentError.new("Wrong argument class for options_source: #{value.class}")
       end
       if sub_options.is_a? Array
-        sub_options.each { |elem| self.options_source=elem }
+        sub_options.each { |elem| self.options_source = elem }
       else
         configure(sub_options)
       end
