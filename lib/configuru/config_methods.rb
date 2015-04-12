@@ -106,7 +106,7 @@ module Configuru
           YAML.load(value)
         when String, Pathname
           output = {}
-          File.open(value,"r") { |f| output = YAML.load(f) }
+          File.open(value,'r') { |f| output = YAML.load(f) }
           output
         else
           raise ArgumentError.new("Wrong argument class for options_source: #{value.class}")

@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'configuru/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "configuru"
+  spec.name          = 'configuru'
   spec.version       = Configuru::VERSION
   spec.authors       = ['moonfly (Andrey Pronin)']
   spec.email         = ['moonfly.msk@gmail.com']
@@ -16,7 +16,7 @@ Gem::Specification.new do |spec|
   spec.files         = `git ls-files -z`.split("\x0")
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
-  spec.require_paths = ["lib"]
+  spec.require_paths = ['lib']
 
   spec.rdoc_options = ['--charset=UTF-8']
   spec.extra_rdoc_files = %w[README.md CONTRIBUTORS.md LICENSE.md]

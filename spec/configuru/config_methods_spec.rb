@@ -12,7 +12,7 @@ describe Configuru::ConfigMethods do
     end
   }
   let(:subject) { TestSubjectClass.new }
-  let(:opts_spec) { Hash("test1" => "something1", :test2 => "something2") }
+  let(:opts_spec) { Hash('test1' => 'something1', :test2 => 'something2') }
   let(:opts_sio) { StringIO.new(opts_spec.to_yaml) }
 
   it 'includes class methods' do
@@ -34,11 +34,11 @@ describe Configuru::ConfigMethods do
       param :test1
       param :test2
     end
-    subject.configure({test1: "something1"}) do |cfg|
-      cfg.test2 = "something2"
+    subject.configure({test1: 'something1'}) do |cfg|
+      cfg.test2 = 'something2'
     end
-    expect(subject.test1).to eq "something1"
-    expect(subject.test2).to eq "something2"
+    expect(subject.test1).to eq 'something1'
+    expect(subject.test2).to eq 'something2'
   end
 
   it 'keeps track of parameters' do
@@ -51,8 +51,8 @@ describe Configuru::ConfigMethods do
       param :test2
     end
     subject.options_source = opts_spec
-    expect(subject.test1).to eq "something1"
-    expect(subject.test2).to eq "something2"
+    expect(subject.test1).to eq 'something1'
+    expect(subject.test2).to eq 'something2'
   end
 
   it 'allows loading options from StringIO' do
@@ -61,8 +61,8 @@ describe Configuru::ConfigMethods do
       param :test2
     end
     subject.options_source = opts_sio
-    expect(subject.test1).to eq "something1"
-    expect(subject.test2).to eq "something2"
+    expect(subject.test1).to eq 'something1'
+    expect(subject.test2).to eq 'something2'
   end
 
   it 'allows loading options from an array of sources, later sources take precendence' do
@@ -71,12 +71,12 @@ describe Configuru::ConfigMethods do
       param :test2
     end
     opts_spec1 = opts_spec.clone
-    opts_spec1.delete("test1")
-    opts_spec1[:test2] = "something3"
+    opts_spec1.delete('test1')
+    opts_spec1[:test2] = 'something3'
 
     subject.options_source = [opts_sio, opts_spec1]
-    expect(subject.test1).to eq "something1"
-    expect(subject.test2).to eq "something3"
+    expect(subject.test1).to eq 'something1'
+    expect(subject.test2).to eq 'something3'
   end
 
   it 'allows loading options from sources several times, later sources take precendence' do
@@ -85,13 +85,13 @@ describe Configuru::ConfigMethods do
       param :test2
     end
     opts_spec1 = opts_spec.clone
-    opts_spec1.delete("test1")
-    opts_spec1[:test2] = "something3"
+    opts_spec1.delete('test1')
+    opts_spec1[:test2] = 'something3'
 
     subject.options_source = opts_sio
     subject.options_source = opts_spec1
-    expect(subject.test1).to eq "something1"
-    expect(subject.test2).to eq "something3"
+    expect(subject.test1).to eq 'something1'
+    expect(subject.test2).to eq 'something3'
   end
 
   it 'does not allow loading options from an arbitrary value' do
@@ -99,7 +99,7 @@ describe Configuru::ConfigMethods do
       param :test1
       param :test2
     end
-    [10,"test1=1;test2=2",nil].each do |value|
+    [10,'test1=1;test2=2',nil].each do |value|
       expect{subject.options_source = value}.to raise_error
     end
   end
@@ -108,7 +108,7 @@ describe Configuru::ConfigMethods do
     subject1 = nil
     subject2 = nil
     subject3 = nil
-    f = Tempfile.new("test_options.yaml")
+    f = Tempfile.new('test_options.yaml')
     begin
       f << opts_spec.to_yaml
       f.open
@@ -127,16 +127,16 @@ describe Configuru::ConfigMethods do
       subject3
     ].each do |s|
       expect(s).not_to be_nil
-      expect(s.test1).to eq "something1"
-      expect(s.test2).to eq "something2"
+      expect(s.test1).to eq 'something1'
+      expect(s.test2).to eq 'something2'
     end
   end
 
   it 'allows specifying defaults' do
     class << subject
-      param :test, default: "something3"
+      param :test, default: 'something3'
     end
-    expect(subject.test).to eq "something3"
+    expect(subject.test).to eq 'something3'
   end
 
   it 'allows restriciting value classes' do
@@ -146,7 +146,7 @@ describe Configuru::ConfigMethods do
     expect{subject.test=[]}.not_to raise_error
     expect{subject.test={}}.not_to raise_error
     expect{subject.test=nil}.to raise_error
-    expect{subject.test=""}.to raise_error
+    expect{subject.test=''}.to raise_error
   end
   it 'allows restriciting value classes through duck typing' do
     class << subject
@@ -155,7 +155,7 @@ describe Configuru::ConfigMethods do
     expect{subject.test=[]}.to raise_error
     expect{subject.test={}}.not_to raise_error # the only one to respond to both :each_pair AND :size
     expect{subject.test=nil}.to raise_error
-    expect{subject.test=""}.to raise_error
+    expect{subject.test=''}.to raise_error
   end
 
   it 'allows locking selected variables' do
@@ -163,24 +163,24 @@ describe Configuru::ConfigMethods do
       param :test1, lockable: true
       param :test2
     end
-    expect{subject.test1="1"}.not_to raise_error
-    expect{subject.test2="1"}.not_to raise_error
-    expect(subject.test1).to eq "1"
-    expect(subject.test2).to eq "1"
+    expect{subject.test1='1'}.not_to raise_error
+    expect{subject.test2='1'}.not_to raise_error
+    expect(subject.test1).to eq '1'
+    expect(subject.test2).to eq '1'
 
     subject.lock
     expect(subject.is_locked).to eq true
-    expect{subject.test1="2"}.to raise_error
-    expect{subject.test2="2"}.not_to raise_error
-    expect(subject.test1).to eq "1"
-    expect(subject.test2).to eq "2"
+    expect{subject.test1='2'}.to raise_error
+    expect{subject.test2='2'}.not_to raise_error
+    expect(subject.test1).to eq '1'
+    expect(subject.test2).to eq '2'
 
     subject.lock(false)
     expect(subject.is_locked).to eq false
-    expect{subject.test1="3"}.not_to raise_error
-    expect{subject.test2="3"}.not_to raise_error
-    expect(subject.test1).to eq "3"
-    expect(subject.test2).to eq "3"
+    expect{subject.test1='3'}.not_to raise_error
+    expect{subject.test2='3'}.not_to raise_error
+    expect(subject.test1).to eq '3'
+    expect(subject.test2).to eq '3'
   end
 
   it 'allows restricting setting nil or empty variables' do
@@ -188,20 +188,20 @@ describe Configuru::ConfigMethods do
       param :test1, not_nil: true
       param :test2, not_empty: true
     end
-    expect{subject.test1="1"}.not_to raise_error
-    expect{subject.test2="1"}.not_to raise_error
-    expect(subject.test1).to eq "1"
-    expect(subject.test2).to eq "1"
+    expect{subject.test1='1'}.not_to raise_error
+    expect{subject.test2='1'}.not_to raise_error
+    expect(subject.test1).to eq '1'
+    expect(subject.test2).to eq '1'
 
     expect{subject.test1=nil}.to raise_error
     expect{subject.test2=nil}.to raise_error
-    expect(subject.test1).to eq "1"
-    expect(subject.test2).to eq "1"
+    expect(subject.test1).to eq '1'
+    expect(subject.test2).to eq '1'
 
-    expect{subject.test1=""}.not_to raise_error
-    expect{subject.test2=""}.to raise_error
-    expect(subject.test1).to eq ""
-    expect(subject.test2).to eq "1"
+    expect{subject.test1=''}.not_to raise_error
+    expect{subject.test2=''}.to raise_error
+    expect(subject.test1).to eq ''
+    expect(subject.test2).to eq '1'
   end
 
   it 'allows converting to pre-defined types' do
@@ -215,7 +215,7 @@ describe Configuru::ConfigMethods do
     end
     expect{subject.test_s=nil}.not_to raise_error
     expect(subject.test_s).to be_a String
-    expect(subject.test_s).to eq ""
+    expect(subject.test_s).to eq ''
 
     expect{subject.test_a=nil}.not_to raise_error
     expect(subject.test_a).to be_a Array
@@ -271,8 +271,8 @@ describe Configuru::ConfigMethods do
   it 'allows specifying a custom conversion method' do
     class Parent
       def check_for_x(value)
-        raise "X is not allowed" if value == "x"
-        "ok"
+        raise 'X is not allowed' if value == 'x'
+        'ok'
       end
     end
     subject.set_parent_object(Parent.new)
@@ -281,8 +281,8 @@ describe Configuru::ConfigMethods do
       param :test2, convert: ->(value) { value+1 }
     end
     expect{subject.test1=3}.not_to raise_error
-    expect(subject.test1).to eq "ok"
-    expect{subject.test1="x"}.to raise_error
+    expect(subject.test1).to eq 'ok'
+    expect{subject.test1='x'}.to raise_error
 
     expect{subject.test2=7}.not_to raise_error
     expect(subject.test2).to eq 8
@@ -291,24 +291,24 @@ describe Configuru::ConfigMethods do
   it 'accesses the conversion method from the specified parent object, not itself' do
     class Parent
       def check_for_x2(value)
-        raise "X is not allowed" if value == "x"
-        "ok"
+        raise 'X is not allowed' if value == 'x'
+        'ok'
       end
     end
     subject.set_parent_object(Parent.new)
     class << subject
       def check_for_x1(value)
-        raise "X is not allowed" if value == "x"
-        "ok"
+        raise 'X is not allowed' if value == 'x'
+        'ok'
       end
       param :test1, convert: :check_for_x1
       param :test2, convert: :check_for_x2
     end
     expect{subject.test1=3}.to raise_error
-    expect{subject.test1="x"}.to raise_error
+    expect{subject.test1='x'}.to raise_error
 
     expect{subject.test2=3}.not_to raise_error
-    expect(subject.test2).to eq "ok"
-    expect{subject.test2="x"}.to raise_error
+    expect(subject.test2).to eq 'ok'
+    expect{subject.test2='x'}.to raise_error
   end
 end
