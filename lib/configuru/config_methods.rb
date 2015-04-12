@@ -106,16 +106,16 @@ module Configuru
 
     def options_source=(value)
       sub_options = case value
-        when Hash, Array then value
-        when IO, StringIO, Tempfile then
-          YAML.load(value)
-        when String, Pathname
-          output = {}
-          File.open(value, 'r') { |f| output = YAML.load(f) }
-          output
-        else
-          fail ArgumentError.new("Wrong argument class for options_source: #{value.class}")
-      end
+                    when Hash, Array then value
+                    when IO, StringIO, Tempfile then
+                      YAML.load(value)
+                    when String, Pathname
+                      output = {}
+                      File.open(value, 'r') { |f| output = YAML.load(f) }
+                      output
+                    else
+                      fail ArgumentError.new("Wrong argument class for options_source: #{value.class}")
+                      end
       if sub_options.is_a? Array
         sub_options.each { |elem| self.options_source = elem }
       else
