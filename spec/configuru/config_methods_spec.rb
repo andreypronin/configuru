@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Configuru::ConfigMethods do
-  before(:each) {
+  before(:each) do
     class TestSubjectClass
       include Configuru::ConfigMethods
     end
@@ -10,7 +10,7 @@ describe Configuru::ConfigMethods do
       param :test1
       param :test2
     end
-  }
+  end
   let(:subject) { TestSubjectClass.new }
   let(:opts_spec) { Hash('test1' => 'something1', :test2 => 'something2') }
   let(:opts_sio) { StringIO.new(opts_spec.to_yaml) }
@@ -34,7 +34,7 @@ describe Configuru::ConfigMethods do
       param :test1
       param :test2
     end
-    subject.configure({ test1: 'something1' }) do |cfg|
+    subject.configure(test1: 'something1') do |cfg|
       cfg.test2 = 'something2'
     end
     expect(subject.test1).to eq 'something1'
