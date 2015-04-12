@@ -169,14 +169,14 @@ describe Configuru::ConfigMethods do
     expect(subject.test2).to eq '1'
 
     subject.lock
-    expect(subject.is_locked).to eq true
+    expect(subject.locked?).to eq true
     expect { subject.test1 = '2' }.to raise_error
     expect { subject.test2 = '2' }.not_to raise_error
     expect(subject.test1).to eq '1'
     expect(subject.test2).to eq '2'
 
     subject.lock(false)
-    expect(subject.is_locked).to eq false
+    expect(subject.locked?).to eq false
     expect { subject.test1 = '3' }.not_to raise_error
     expect { subject.test2 = '3' }.not_to raise_error
     expect(subject.test1).to eq '3'

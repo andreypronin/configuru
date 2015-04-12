@@ -23,7 +23,7 @@ module Configuru
         end
 
         define_method("#{name}=") do |value|
-          if options[:lockable] && is_locked
+          if options[:lockable] && locked?
             fail ArgumentError.new("'#{name}' cannot be set at this time")
           end
           if options[:not_nil] && value.nil?
@@ -77,7 +77,7 @@ module Configuru
     def lock(flag=true)
       @locked = flag
     end
-    def is_locked
+    def locked?
       @locked = false unless instance_variable_defined?(:@locked)
       @locked
     end

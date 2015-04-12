@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.rdoc_options = ['--charset=UTF-8']
-  spec.extra_rdoc_files = %w[README.md CONTRIBUTORS.md LICENSE.md]
+  spec.extra_rdoc_files = %w(README.md CONTRIBUTORS.md LICENSE.md)
 
   spec.required_ruby_version = '>= 2.1.0'
 
