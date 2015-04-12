@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Configuru::VERSION
   spec.authors       = ['moonfly (Andrey Pronin)']
   spec.email         = ['moonfly.msk@gmail.com']
-  spec.summary       = %q{Configuration for your classes}
-  spec.description   = %q{Provides convenient interface for managing configuration parameters for modules, classes and instances.}
+  spec.summary       = 'Configuration for your classes'
+  spec.description   = 'Provides convenient interface for managing configuration parameters for modules, classes and instances.'
   spec.homepage      = 'https://github.com/moonfly/configuru'
   spec.license       = 'MIT'
 
