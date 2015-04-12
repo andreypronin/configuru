@@ -34,7 +34,7 @@ describe Configuru::ConfigMethods do
       param :test1
       param :test2
     end
-    subject.configure({test1: 'something1'}) do |cfg|
+    subject.configure({ test1: 'something1' }) do |cfg|
       cfg.test2 = 'something2'
     end
     expect(subject.test1).to eq 'something1'
