@@ -11,6 +11,7 @@ module Configuru
       def param_names
         @param_names ||= []
       end
+
       def param(name, options={})
         param_names << name.to_sym
 
@@ -77,13 +78,16 @@ module Configuru
     def lock(flag=true)
       @locked = flag
     end
+
     def locked?
       @locked = false unless instance_variable_defined?(:@locked)
       @locked
     end
+
     def param_names
       self.class.param_names
     end
+
     def set_parent_object(object)
       @__parent_object = object
     end
@@ -99,6 +103,7 @@ module Configuru
       yield self if block_given?
       self
     end
+
     def options_source=(value)
       sub_options = case value
         when Hash, Array then value

@@ -28,6 +28,7 @@ module Configuru
       def configuration
         @configuruation ||= configuration_class.new(self)
       end
+
       def configure(options, &block)
         configuration.configure(options, &block)
       end
